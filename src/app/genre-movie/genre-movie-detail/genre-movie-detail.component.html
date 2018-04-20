@@ -1,0 +1,17 @@
+<div class="row">
+
+<div class="col-3">Nombre: </div>
+<div class="col-9"> <input type="text" name="name" [(ngModel)]="genreName"> </div>
+
+
+<div class="col-3">Descripción:</div>
+<div class="col-9">
+<textarea class="description-text-area" cols="5" type="text" name="description" [(ngModel)]="genreDescription" > </textarea> </div>
+
+
+<div class="col-12">
+<button class="btn btn-success" (click)="addGenre()" >Guarde</button>
+</div>
+
+</div>
+

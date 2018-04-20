@@ -1,0 +1,19 @@
+
+
+<h3>Lista de Películas disponibles</h3>
+
+    <carousel>
+      <slide *ngFor="let movie of movieService.movieList" >
+        <div class="text-center py-5 bg-dark text-white">
+          <h2>{{movie.name}}</h2>
+          <div class="lead">
+            <h3>{{movie.synopsis}}</h3>
+            <p>${{movie.price}}</p>
+          </div>
+        </div>
+      </slide>
+    </carousel>
+
+
+
+
