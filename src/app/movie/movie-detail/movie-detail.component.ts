@@ -1,47 +1,83 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
-import { Movie } from '../movie.model'
-import { GenreMovie } from '../../genre-movie/genre-movie.model'
-import { GenreMovieService } from '../../genre-movie/genre-movie.service';
+import { Component, OnInit, Output, EventEmitter, Input ,OnChanges} from '@angular/core';
+import { Movie } from '../movie.model';
+import { GenreMovie } from '../../genre-movie/genre-movie.model';
 
 @Component({
   selector: 'movie-detail',
   templateUrl: './movie-detail.component.html',
   styleUrls: ['./movie-detail.component.css']
 })
-export class MovieDetailComponent implements OnInit {
+export class MovieDetailComponent implements OnInit, OnChanges {
 
-  @Output() addedMovie: EventEmitter<Movie> = new EventEmitter<Movie>();
-	public name: string = "";
-	public synopsis: string = "";
-	public genreId: number;
-	public stock: number = 0;
-	public price: number = 0;
+  @Output() addedMovie: EventEmitter<any> = new EventEmitter<any>();
+  @Output() updatedMovie: EventEmitter<any> = new EventEmitter<any>();
+  @Input('genreList') genreList : GenreMovie[];
+  @Input('selectedMovie') movie : Movie = new Movie();
+	submitted = false;
+	isEditing = false;
 
-  constructor(private genreMovieService:GenreMovieService) { }
+  constructor() { }
 
   	ngOnInit() {
+		this.loadGenre();
+  	}
 
-  		this.genreId = this.genreMovieService.getGenreMovieList()[0].id;
-
+  	loadGenre(){
+  		if(this.genreList != null){
+  			if(this.genreList.length > 0){
+				this.movie.genreId = this.genreList[0]._id;
+				console.log("this.movie.genreId: "+this.movie.genreId);
+			}
+		}
   	}
 
 
+  	ngOnChanges(changes){
+		if(changes.movie && changes.movie.currentValue._id){
+			this.isEditing = true;
+		}
 
-  public addMovie(){
-	let movie = new Movie();
-	movie.name = this.name;
-	movie.synopsis = this.synopsis;
-	movie.idGenre = this.genreId
-	movie.stock = this.stock;
-	movie.price = this.price;
+		if(changes.genreList){
+			this.loadGenre();
+		}
+  }
 
-	this.addedMovie.emit(movie);
-	this.name = '';
-	this.synopsis = '';
-	this.stock = 0;
-	this.price = 0;
-	this.genreId = this.genreMovieService.getGenreMovieList()[0].id;
+
+  public addMovie(movieForm){
+
+	if(this.isEditing){
+		this.updatedMovie.emit({
+			'movie':this.movie,
+			'form':movieForm
+		});
+
+		this.isEditing = false;
+		movieForm.reset();
+
+	} else {
+		this.addedMovie.emit({
+			'movie':this.movie,
+			'form':movieForm
+		});
+		movieForm.reset();
+	}
+	
+	this.submitted = true; 
+	this.newMoviePosUpdate();
 	
   }
+
+   newMovie(){
+		this.submitted = false; 
+		this.isEditing = false;
+		this.movie = new Movie();
+		this.loadGenre();
+	}
+
+	newMoviePosUpdate(){
+		console.log("newMoviePosUpdate");
+		this.movie = new Movie();
+		this.loadGenre();
+	}
 
 }

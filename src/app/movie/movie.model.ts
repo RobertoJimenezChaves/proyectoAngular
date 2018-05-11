@@ -1,9 +1,9 @@
 export class Movie {
 	name: string;
 	synopsis: string;
-	id: number;
+	_id: string;
 	edit: boolean;
-	idGenre: number;
+	genreId: string;
 	stock: number;
 	price: number;
 

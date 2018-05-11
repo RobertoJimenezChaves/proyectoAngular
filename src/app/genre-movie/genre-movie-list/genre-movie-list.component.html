@@ -1,29 +1,26 @@
+
+
 <div class="row">
 
-<div class="col-10 border-line-divider"></div>
-<div class="col-10 div-space"></div>
-
-<div class="col-10">
-<span *ngIf = "!genreMovie.edit"> {{genreMovie.name}} </span>
-<input *ngIf = "genreMovie.edit" type="text" name="genderName" [(ngModel)]="genreMovie.name" >
+<div class="col-12">
+<span> {{genreMovie.name}} </span>
 
 </div> 
-
-<div class="col-10">
-<span *ngIf = "!genreMovie.edit">{{genreMovie.description}} </span>
-<textarea class="description-text-area" *ngIf = "genreMovie.edit" cols="5" type="text" name="genderDescription" [(ngModel)]="genreMovie.description" > </textarea>
-</div>  
 
 <div class="col-12">
-	<button *ngIf = "genreMovie.edit" type="button" (click)="editGenre(genreMovie)" class="btn btn-link">Guarde</button>
+<span>{{genreMovie.description}} </span>
+</div>  
+
+</div>
+
+<div class="row">
+
+<div class="col-6">
+	<button type="button" (click)="editGenre(genreMovie)" class="btn btn-link">Editar</button>
 </div> 
 
 <div class="col-6">
-	<button *ngIf = "!genreMovie.edit" type="button" (click)="genreMovie.edit = !genreMovie.edit " class="btn btn-link">Editar</button>
-</div> 
-
-<div class="col-6">
-	<button *ngIf = "!genreMovie.edit" type="button" (click)="removeGenre(genreMovie)" class="btn btn-link">Eliminar</button>
+	<button type="button" (click)="removeGenre(genreMovie)" class="btn btn-link">Eliminar</button>
 </div>
 
 </div>

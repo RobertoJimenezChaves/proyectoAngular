@@ -1,33 +1,89 @@
-<div class="row">
-
-<div class="col-3">Nombre: </div>
-<div class="col-9"> <input type="text" name="name" [(ngModel)]="name"> </div>
+<form (ngSubmit)="addMovie(movieForm)" #movieForm="ngForm" novalidate>
 
 
-<div class="col-3">Sinopsis:</div>
-<div class="col-9">
-<textarea class="description-text-area" cols="5" type="text" name="synopsis" [(ngModel)]="synopsis" > </textarea> </div>
+	<div class="form-group">
+		<label for="name">Nombre: </label>
+		<input type="text" name="name" [(ngModel)]="movie.name"
+	#name="ngModel" required capital-letter-validator> 
+
+		<div [hidden]="name.valid || name.pristine" class="alert alert-danger">
+			<div *ngIf="name.errors && name.errors.required">
+				El Nombre es requerido
+			</div>
+			<div *ngIf="name.errors && name.errors.capitalLetter">
+				El texto debe iniciar con Mayuscula
+			</div>
+		</div>
+	</div>
 
 
-<div class="col-3">Género:</div>
-<div class="col-9">
+	<div class="form-group">
+		<label for="name">Sinopsis: </label>
+		<textarea class="description-text-area" cols="5" type="text" name="synopsis" [(ngModel)]="movie.synopsis" #synopsis="ngModel" required capital-letter-validator> </textarea> 
 
-<select [(ngModel)]="genreId">
-    <option *ngFor="let genreMovie of genreMovieService.genreMovieList"
-    value="{{genreMovie.id}}">{{genreMovie.name}}</option>
-  </select>
+		<div [hidden]="synopsis.valid || synopsis.pristine" class="alert alert-danger">
+			<div *ngIf="synopsis.errors && synopsis.errors.required">
+				La sinopsis es requerida
+			</div>
+			<div *ngIf="synopsis.errors && synopsis.errors.capitalLetter">
+				El texto debe iniciar con Mayuscula
+			</div>
+		</div>
+	</div>
 
-</div>
+	<div class="form-group">
+		<label for="name">Género: </label>
+		<select [(ngModel)]="movie.genreId" name="genreId" #genreId="ngModel"  required>
+		    <option *ngFor="let genreMovie of genreList"
+		    value="{{genreMovie._id}}">{{genreMovie.name}}</option>
+		</select>
 
-<div class="col-3">Precio:</div>
-<div class="col-9"> <input type="number" name="price" [(ngModel)]="price"> </div>
+		<div [hidden]="genreId.valid || genreId.pristine" class="alert alert-danger">
+			<div *ngIf="genreId.errors && genreId.errors.required">
+				El genero es requerido
+			</div>
+		</div>
+	</div>
 
-<div class="col-3">Disponibles:</div>
-<div class="col-9"> <input type="number" name="stock" [(ngModel)]="stock"> </div>
+	<div class="form-group">
+		<label for="name">Precio: </label>
+		<input type="number" name="price" #price="ngModel"
+          [(ngModel)]="movie.price" required pattern="[0-9]*"> 
+
+		<div [hidden]="price.valid || price.pristine" class="alert alert-danger">
+			<div *ngIf="price.errors && price.errors.required">
+				El precio es requerido
+			</div>
+
+			<div *ngIf="price.errors && price.errors.pattern">
+				El precio debe ser un valor numerico positivo
+			</div>
+		</div>
+	</div>
+
+	<div class="form-group">
+		<label for="name">Disponibles: </label>
+		<input type="number" name="stock" #stock="ngModel" 
+ 			[(ngModel)]="movie.stock" required pattern="[0-9]*" > 
+
+		<div [hidden]="stock.valid || stock.pristine" class="alert alert-danger">
+			<div *ngIf="stock.errors && stock.errors.required">
+				La cantidad disponible es requerida
+			</div>
+
+			<div *ngIf="stock.errors && stock.errors.pattern">
+				La cantidad disponible debe ser un valor numerico positivo
+			</div>
+
+		</div>
+	</div>
 
 
-<div class="col-12">
-<button class="btn btn-success" (click)="addMovie()" >Guarde</button>
-</div>
+<button class="btn btn-success" type="submit"
+[disabled]="!movieForm.form.valid" ><span  *ngIf="!isEditing"> Agregue </span>
+<span *ngIf="isEditing"> Edite </span></button>
 
-</div>
+<button type="button" class="btn btn-danger" (click)="movieForm.reset(); newMovie(); ">Nuevo</button>
+
+
+</form>

@@ -10,7 +10,7 @@ import { GenreMovie } from '../genre-movie.model'
 export class GenreMovieListComponent implements OnInit {
 	@Input() genreMovie;
 	@Output() removedGenre: EventEmitter<GenreMovie> = new EventEmitter<GenreMovie>();
-	@Output() updatedGenre: EventEmitter<GenreMovie> = new EventEmitter<GenreMovie>();
+	@Output() selectGenre: EventEmitter<GenreMovie> = new EventEmitter<GenreMovie>();
 	
 
   constructor() { }
@@ -23,7 +23,7 @@ export class GenreMovieListComponent implements OnInit {
   }
 
   public editGenre(genre:GenreMovie){
-  	this.updatedGenre.emit(genre);
+  	this.selectGenre.emit(genre);
   }
 
 }

@@ -1,49 +1,37 @@
 <div class="row">
 
-<div class="col-10 border-line-divider"></div>
-<div class="col-10 div-space"></div>
-
-<div class="col-10">
-<span *ngIf = "!movie.edit"> {{movie.name}} </span>
-<input *ngIf = "movie.edit" type="text" name="movieName" [(ngModel)]="movie.name" >
-
-</div> 
-
-<div class="col-10">
-<span *ngIf = "!movie.edit">{{movie.synopsis}} </span>
-<textarea class="description-text-area" *ngIf = "movie.edit" cols="5" type="text" name="synopsis" [(ngModel)]="movie.synopsis" > </textarea>
-</div> 
-
-<div class="col-10">
-	<select [(ngModel)]="movie.idGenre" [disabled]="!movie.edit">
-    <option *ngFor="let genreMovie of genreMovieService.genreMovieList"
-    value="{{genreMovie.id}}">{{genreMovie.name}}</option>
-  </select>
-</div> 
-
-<div class="col-10">
-<span>Precio: $</span> <span *ngIf = "!movie.edit">{{movie.price}} </span>
-<input *ngIf = "movie.edit" type="number" name="price" [(ngModel)]="movie.price" >
-
-</div> 
-
-<div class="col-10">
-<span>Disponibles: </span> <span *ngIf = "!movie.edit">{{movie.stock}} </span>
-<input *ngIf = "movie.edit" type="number" name="stock" [(ngModel)]="movie.stock" >
-
-</div> 
-
 
 <div class="col-12">
-	<button *ngIf = "movie.edit" type="button" (click)="editMovie(movie)" class="btn btn-link">Guarde</button>
+<span > {{movie.name}} </span>
+
+</div> 
+
+<div class="col-12">
+<span >{{movie.synopsis}} </span>
+
+</div> 
+
+<div class="col-12">
+	<span>{{getNameGenre(movie.genreId)}} </span>
+</div> 
+
+<div class="col-12">
+<span>Precio: ${{movie.price}} </span>
+
+</div> 
+
+<div class="col-12">
+<span>Disponibles: {{movie.stock}} </span>
+
+</div> 
+
+
+<div class="col-6">
+	<button type="button" (click)="editMovie(movie)" class="btn btn-link">Editar</button>
 </div> 
 
 <div class="col-6">
-	<button *ngIf = "!movie.edit" type="button" (click)="movie.edit = !movie.edit " class="btn btn-link">Editar</button>
-</div> 
-
-<div class="col-6">
-	<button *ngIf = "!movie.edit" type="button" (click)="removeMovie(movie)" class="btn btn-link">Eliminar</button>
+	<button type="button" (click)="removeMovie(movie)" class="btn btn-link">Eliminar</button>
 </div>
 
 </div>

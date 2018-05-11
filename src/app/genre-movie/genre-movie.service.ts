@@ -1,48 +1,26 @@
 import { Injectable } from '@angular/core';
-import { GenreMovie } from './genre-movie.model'
+import { GenreMovie } from './genre-movie.model';
+import { DataService } from '../services/data.service';
 
 @Injectable()
 export class GenreMovieService {
 
-public genreMovieList: GenreMovie[] = [
-	{
-		id : 1,
-		name : 'Drama',
-		description : 'Se centran principalmente en el desarrollo de un conflicto entre los protagonistas.',
-		edit: false
-	},{
-		id : 2,
-		name : 'Comedia',
-		description : 'Realizadas con la intención de provocar humor.',
-		edit: false
-	},{
-		id : 3,
-		name : 'Acción',
-		description : 'Implica una interacción moral entre el «bien» y el «mal» llevada a su fin por la violencia.',
-		edit: false
-	}
-
-];
-
-  constructor() { }
+  constructor(private dataService:DataService) { }
 
   public getGenreMovieList(){
-		return this.genreMovieList;
+		return this.dataService.get('/api/genres');
   }
 
   public addGenreMovie(newGenreMovie:GenreMovie){
-  		newGenreMovie.id = this.genreMovieList.length +1;
-  		newGenreMovie.edit = false;
-  		console.log("newGenreMovie.id: "+newGenreMovie.id);
-		this.genreMovieList.push(newGenreMovie);
+		return this.dataService.post('/api/genres',{'genre':newGenreMovie});
   }
 
   public removeGenreMovie(genreMovie:GenreMovie){
-		this.genreMovieList = this.genreMovieList.filter(item => item !== genreMovie);
+		return this.dataService.delete('/api/genres/'+genreMovie._id);
   }
 
   public editGenreMovie(genreMovie:GenreMovie){
-  		genreMovie.edit = false;
+    return this.dataService.put('/api/genres/'+genreMovie._id,{'genre':genreMovie});
   }
 
 }

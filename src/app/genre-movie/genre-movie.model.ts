@@ -1,8 +1,7 @@
 export class GenreMovie {
-	name: string;
-	description: string;
-	id: number;
-	edit: boolean;
+	name: string = '';
+	description: string = '';
+	_id: string = undefined;
 
 	constructor(){
 	}
